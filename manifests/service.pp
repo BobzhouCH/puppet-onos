@@ -36,16 +36,13 @@ exec{ 'install openflow feature':
         command => "/opt/onos/bin/onos 'feature:install onos-openflow'"
 }->
 exec{ 'install openflow-base feature':
-        command => "/opt/onos/bin/onos 'feature:install onos-openflow-base'"
+        command => "/opt/onos/bin/onos 'feature:install onos-providers-openflow-base'"
 }->
 exec{ 'install onos-ovsdb-base feature':
-        command => "/opt/onos/bin/onos 'feature:install onos-ovsdb-base'"
-}->
-exec{ 'install ovsdatabase feature':
-        command => "/opt/onos/bin/onos 'feature:install onos-ovsdatabase'"
+        command => "/opt/onos/bin/onos 'feature:install onos-providers-ovsdb-base'"
 }->
 exec{ 'install onos-ovsdb-provider-host feature':
-        command => "/opt/onos/bin/onos 'feature:install onos-ovsdb-provider-host'"
+        command => "/opt/onos/bin/onos 'feature:install onos-providers-ovsdb-host'"
 }->
 exec{ 'install onos-drivers-ovsdb feature':
         command => "/opt/onos/bin/onos 'feature:install onos-drivers-ovsdb'"
@@ -54,7 +51,7 @@ exec{ 'sleep 10 to stablize onos features':
         command => 'sudo sleep 10;'
 }->
 exec{ 'install vtn feature':
-        command => "/opt/onos/bin/onos 'feature:install onos-app-vtn-onosfw'"
+        command => "/opt/onos/bin/onos 'feature:install onos-apps-vtn'"
 }->
 exec{ 'add onos auto start':
         command => 'sudo echo "onos">>/opt/service',
