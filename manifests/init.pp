@@ -14,6 +14,4 @@ class {'::onos::install':}->
 class {'::onos::config':}->
 class {'::onos::service':
       controllers_ip => $controllers_ip}->
-class {'::onos::ovs':
-      manager_ip => $ovs_manager_ip}
 }

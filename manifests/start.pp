@@ -1,4 +1,4 @@
-class onos::start{
+class onos::start($onos_ip){
 
 Exec { path => [ "/bin/", "/sbin/" , "/usr/bin/", "/usr/sbin/" ] }
 neutron_plugin_ml2 {
@@ -6,7 +6,7 @@ neutron_plugin_ml2 {
   'ml2/tenant_network_types':    value => 'vxlan';
   'ml2_onos/password':           value => 'admin';
   'ml2_onos/username':           value => 'admin';
-  'ml2_onos/url_path':           value => "http://$::ipaddress_br_mgmt:8181/onos/vtn";
+  'ml2_onos/url_path':           value => "http://$onos_ip:8181/onos/vtn";
 }
 
 exec{ 'Configure Neutron3':
