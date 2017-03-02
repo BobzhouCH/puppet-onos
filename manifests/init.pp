@@ -13,5 +13,5 @@ $onos_extra_features = 'ovsdb,vtn'
 class {'::onos::install':}->
 class {'::onos::config':}->
 class {'::onos::service':
-      controllers_ip => $controllers_ip}->
+      controllers_ip => $controllers_ip}
 }
