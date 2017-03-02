@@ -16,18 +16,6 @@ exec{ 'Configure Neutron3':
 
         exec{ 'restart neutron':
         command  => "service neutron-server restart",
-} ->
-service {'neutron-dhcp-agent':
-        ensure => running,
-        enable => true,
-} ->
-service {'neutron-metadata-agent':
-        ensure => running,
-        enable => true,
-} ->
-service {'neutron-l3-agent':
-        ensure => running,
-        enable => true,
 }
 
 }
