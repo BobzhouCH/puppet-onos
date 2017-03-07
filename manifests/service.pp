@@ -35,6 +35,9 @@ exec{ 'sleep 100 to stablize onos':
 exec{ 'install openflow feature':
         command => "/opt/onos/bin/onos 'feature:install onos-providers-openflow-message'"
 }->
+exec{ 'install optical feature':
+        command => "/opt/onos/bin/onos 'feature:install onos-optical-model'"
+}->
 exec{ 'install openflow-base feature':
         command => "/opt/onos/bin/onos 'feature:install onos-providers-openflow-base'"
 }->
