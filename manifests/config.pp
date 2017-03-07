@@ -6,7 +6,7 @@ $onos_boot_features = $onos::onos_boot_features
 $onos_extra_features = $onos::onos_extra_features
 $controllers_ip = $onos::controllers_ip
 
-notify { "controllers_ip is $controllers_ip":
+notify { "controllers_ip is $controllers_ip[0]":
   withpath => true
  }
 
