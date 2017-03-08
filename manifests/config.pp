@@ -4,9 +4,9 @@ $onos_home = $onos::onos_home
 $karaf_dist = $onos::karaf_dist
 $onos_boot_features = $onos::onos_boot_features
 $onos_extra_features = $onos::onos_extra_features
-$controllers_ip = $onos::controllers_ip
+$controllers_ip = $onos::controllers_ip[0]
 
-notify { "controllers_ip is $controllers_ip[0]":
+notify { "controllers_ip is $controllers_ip":
   withpath => true
  }
 

@@ -19,8 +19,8 @@ exec{ 'start onos':
 #        ensure => running,
 #        enable => true,
 #}->
-exec{ 'sleep 100 to stablize onos':
-        command => 'sudo sleep 100;'
+exec{ 'sleep 150 to stablize onos':
+        command => 'sudo sleep 150;'
 }->
 
 ## create onos cluster
