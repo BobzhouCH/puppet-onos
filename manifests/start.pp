@@ -19,9 +19,9 @@ class onos::start($onos_ip){
 
 Exec { path => [ "/bin/", "/sbin/" , "/usr/bin/", "/usr/sbin/" ] }
 neutron_plugin_ml2 {
-  'ml2_onos/password':           value => 'admin';
-  'ml2_onos/username':           value => 'admin';
-  'ml2_onos/url_path':           value => "http://$onos_ip:8181/onos/vtn";
+  'onos/password':           value => 'admin';
+  'onos/username':           value => 'admin';
+  'onos/url_path':           value => "http://$onos_ip:8181/onos/vtn";
 }
 include ::neutron::deps
 }
