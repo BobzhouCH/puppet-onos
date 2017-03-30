@@ -1,16 +1,5 @@
-# comment neutron related steps
+# comment neutron and dhcp related steps
 #
-#
-#exec{ 'Configure Neutron3':
-#        command  => "mysql -e 'drop database if exists neutron;';
-#                    mysql -e 'create database neutron character set utf8;';
-#                    mysql -e \"grant all on neutron.* to 'neutron'@'%';\";
-#                    neutron-db-manage --config-file /etc/neutron/neutron.conf --config-file /etc/neutron/plugin.ini upgrade head;",
-#} ->
-#
-#        exec{ 'restart neutron':
-#        command  => "service neutron-server restart",
-#}
 #
 #
 #
@@ -23,6 +12,14 @@ neutron_plugin_ml2 {
   'onos/username':           value => 'admin';
   'onos/url_path':           value => "http://$onos_ip:8181/onos/vtn";
 }
+
+# in openstack newton. dhcp agent use native(ovsdb) as default. We need vsctl.
+
+Exec { path => [ "/bin/", "/sbin/" , "/usr/bin/", "/usr/sbin/" ] }
+neutron_dhcp_agent_config {
+    'OVS/ovsdb_interface':   value => 'vsctl';
+}
+
 include ::neutron::deps
 }
 

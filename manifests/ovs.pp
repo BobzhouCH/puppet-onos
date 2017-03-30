@@ -24,7 +24,7 @@ $cmd_remove_l3_agent = $operatingsystem ? {
 }
 
 firewall{'216 vxlan':
-      port   => [4789],
+      port   => [4790],
       proto  => 'udp',
       action => 'accept',
 }->
