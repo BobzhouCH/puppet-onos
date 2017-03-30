@@ -15,11 +15,9 @@ neutron_plugin_ml2 {
 
 # in openstack newton. dhcp agent use native(ovsdb) as default. We need vsctl.
 
-Exec { path => [ "/bin/", "/sbin/" , "/usr/bin/", "/usr/sbin/" ] }
 neutron_dhcp_agent_config {
     'OVS/ovsdb_interface':   value => 'vsctl';
 }
 
-include ::neutron::deps
 }
 
