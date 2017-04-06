@@ -13,6 +13,7 @@ $onos_cluster_file_path = '/opt/onos/config/cluster.json'
 
 class {'::onos::install':}->
 class {'::onos::config':}->
-class {'::onos::service':
-      controllers_ip => $controllers_ip}
+class {'::onos::service':}->
+class {'::onos::cluster':
+      controllers_ip => $controllers_ip}	  
 }

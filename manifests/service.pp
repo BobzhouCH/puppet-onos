@@ -1,4 +1,4 @@
-class onos::service ($controllers_ip) {
+class onos::service () {
 
 Exec{
         path => "/usr/bin:/usr/sbin:/bin:/sbin",
@@ -53,20 +53,6 @@ exec{ 'add onos auto start':
 }-> 
 exec{ 'set public port':
         command => "/opt/onos/bin/onos 'externalportname-set -n onos_port2'",
-}->
-
-exec{ 'sleep 50 to stablize onos':
-        command => 'sudo sleep 50;'
-}
-
-## create onos cluster
-if size($controllers_ip) > 1 and !$onos_cluster_file_path {
-  $ip1 = $controllers_ip[0]
-  $ip2 = $controllers_ip[1]
-  $ip3 = $controllers_ip[2]
-  exec{ 'create onos cluster':
-        command => "/opt/onos/bin/onos-form-cluster $ip1 $ip2 $ip3"
-  }
 }
 
 }
