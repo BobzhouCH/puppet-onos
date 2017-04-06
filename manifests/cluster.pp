@@ -9,7 +9,9 @@ if size($controllers_ip) > 1 and !$onos_cluster_file_path {
         command => "/opt/onos/bin/onos-form-cluster $ip1 $ip2 $ip3"
   }->
   exec{ 'sleep 150 for onos restart':
-        command => 'sudo sleep 150;'
+        command => 'sudo sleep 150',
+		path => "/usr/bin:/usr/sbin:/bin:/sbin",
+        logoutput => "true",
   }
 }
 }
