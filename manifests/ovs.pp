@@ -1,4 +1,4 @@
-class onos::ovs ($manager_ip){
+class onos::ovs ($controllers_ip){
 $neutron_ovs_agent = $::operatingsystem ? {
   'CentOS' => 'neutron-openvswitch-agent',
   'Ubuntu' => 'neutron-plugin-openvswitch-agent',
@@ -62,8 +62,15 @@ firewall{'216 vxlan':
      exec{ 'sleep 20 to stablize onos in ovs.pp':
         command => 'sudo sleep 20;'
 }->
+
+if count($controllers_ip) > 1 {
      exec{'Set ONOS as the manager':
-        command => "su -s /bin/sh -c 'ovs-vsctl set-manager tcp:$manager_ip:6640'",
+        command => "su -s /bin/sh -c 'ovs-vsctl set-manager tcp:$controllers_ip[0]:6640 tcp:$controllers_ip[1]:6640 tcp:$controllers_ip[2]:6640'",
+         }
+} else {
+     exec{'Set ONOS as the manager':
+        command => "su -s /bin/sh -c 'ovs-vsctl set-manager tcp:$controllers_ip:6640'",
+         }
 }->
      exec{ 'sleep 30 for ovs config stable':
         command => 'sudo sleep 30;'
@@ -76,8 +83,14 @@ firewall{'216 vxlan':
         onlyif => "su -s /bin/sh -c 'ovs-vsctl br-exists br-int'"
 }->
 
-     exec{'Set ONOS as the manager again':
-        command => "su -s /bin/sh -c 'ovs-vsctl set-manager tcp:$manager_ip:6640'",
+if count($controllers_ip) > 1 {
+     exec{'Set ONOS as the manager':
+        command => "su -s /bin/sh -c 'ovs-vsctl set-manager tcp:$controllers_ip[0]:6640 tcp:$controllers_ip[1]:6640 tcp:$controllers_ip[2]:6640'",
+         }
+} else {
+     exec{'Set ONOS as the manager':
+        command => "su -s /bin/sh -c 'ovs-vsctl set-manager tcp:$controllers_ip:6640'",
+         }
 }
 
 }
