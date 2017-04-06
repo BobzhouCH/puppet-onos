@@ -61,7 +61,7 @@ firewall{'216 vxlan':
 }->
      exec{ 'sleep 20 to stablize onos in ovs.pp':
         command => 'sudo sleep 20;'
-}->
+}
 
 if count($controllers_ip) > 1 {
      exec{'Set ONOS as the manager':
@@ -71,7 +71,7 @@ if count($controllers_ip) > 1 {
      exec{'Set ONOS as the manager':
         command => "su -s /bin/sh -c 'ovs-vsctl set-manager tcp:$controllers_ip:6640'",
          }
-}->
+}
      exec{ 'sleep 30 for ovs config stable':
         command => 'sudo sleep 30;'
 }->
@@ -81,7 +81,7 @@ if count($controllers_ip) > 1 {
      exec{'Remove br-int on ovs':
         command => "su -s /bin/sh -c 'ovs-vsctl del-br br-int'",
         onlyif => "su -s /bin/sh -c 'ovs-vsctl br-exists br-int'"
-}->
+}
 
 if count($controllers_ip) > 1 {
      exec{'Set ONOS as the manager':

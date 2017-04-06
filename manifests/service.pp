@@ -21,7 +21,7 @@ exec{ 'start onos':
 #}->
 exec{ 'sleep 150 to stablize onos':
         command => 'sudo sleep 150;'
-}->
+}
 
 ## create onos cluster
 if count($controllers_ip) > 1 {
