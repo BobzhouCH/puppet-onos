@@ -63,7 +63,7 @@ firewall{'216 vxlan':
         command => 'sudo sleep 20;'
 }
 
-if count($controllers_ip) > 1 {
+if size($controllers_ip) > 1 {
      exec{'Set ONOS as the manager':
         command => "su -s /bin/sh -c 'ovs-vsctl set-manager tcp:$controllers_ip[0]:6640 tcp:$controllers_ip[1]:6640 tcp:$controllers_ip[2]:6640'",
          }
@@ -83,7 +83,7 @@ if count($controllers_ip) > 1 {
         onlyif => "su -s /bin/sh -c 'ovs-vsctl br-exists br-int'"
 }
 
-if count($controllers_ip) > 1 {
+if size($controllers_ip) > 1 {
      exec{'Set ONOS as the manager':
         command => "su -s /bin/sh -c 'ovs-vsctl set-manager tcp:$controllers_ip[0]:6640 tcp:$controllers_ip[1]:6640 tcp:$controllers_ip[2]:6640'",
          }

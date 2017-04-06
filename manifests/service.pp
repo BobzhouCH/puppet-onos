@@ -24,7 +24,7 @@ exec{ 'sleep 150 to stablize onos':
 }
 
 ## create onos cluster
-if count($controllers_ip) > 1 {
+if size($controllers_ip) > 1 {
   $ip1 = $controllers_ip[0]
   $ip2 = $controllers_ip[1]
   $ip3 = $controllers_ip[2]
