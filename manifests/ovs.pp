@@ -59,7 +59,6 @@ firewall{'216 vxlan':
 }->
      exec{'Set ONOS as the manager':
         command => "su -s /bin/sh -c 'ovs-vsctl set-manager $onos_ovsdb_iface'",
-}
 }-> 
      exec{ 'sleep 30 for ovs config stable':
         command => 'sudo sleep 30;'
