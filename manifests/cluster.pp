@@ -18,4 +18,5 @@ $onos_cluster_file_path = $onos::onos_cluster_file_path
 		onlyif => "test -f $onos_cluster_file_path",
 		path => "/usr/bin:/usr/sbin:/bin:/sbin"
   }
+  notify {'onos cluster set up': }
 }
