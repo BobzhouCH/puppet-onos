@@ -1,4 +1,7 @@
 class onos::ovs ($controllers_ip){
+
+$onos_ovsdb_iface = join(regsubst($controllers_ip, '.+', 'tcp:\0:6640'), ' ')
+
 $neutron_ovs_agent = $::operatingsystem ? {
   'CentOS' => 'neutron-openvswitch-agent',
   'Ubuntu' => 'neutron-plugin-openvswitch-agent',
@@ -43,14 +46,6 @@ firewall{'216 vxlan':
         ensure => stopped,
         enable => false,
 }->
-#
-#        exec{'Stop the OpenvSwitch service and clear existing OVSDB':
-#        command =>  "service $ovs_service stop ;
-#        rm -rf /var/log/openvswitch/* ;
-#        rm -rf /etc/openvswitch/conf.db ;
-#        service $ovs_service start ;"
-#
-#}->
      file{ '/opt/set_external_port.sh':
         source => "puppet:///modules/onos/set_external_port.sh",
 }->     
@@ -61,17 +56,11 @@ firewall{'216 vxlan':
 }->
      exec{ 'sleep 20 to stablize onos in ovs.pp':
         command => 'sudo sleep 20;'
-}
-
-if size($controllers_ip) > 1 {
+}->
      exec{'Set ONOS as the manager':
-        command => "su -s /bin/sh -c 'ovs-vsctl set-manager tcp:$controllers_ip[0]:6640 tcp:$controllers_ip[1]:6640 tcp:$controllers_ip[2]:6640'",
-         }
-} else {
-     exec{'Set ONOS as the manager':
-        command => "su -s /bin/sh -c 'ovs-vsctl set-manager tcp:$controllers_ip:6640'",
-         }
+        command => "su -s /bin/sh -c 'ovs-vsctl set-manager $onos_ovsdb_iface'",
 }
+}-> 
      exec{ 'sleep 30 for ovs config stable':
         command => 'sudo sleep 30;'
 }->
@@ -81,16 +70,9 @@ if size($controllers_ip) > 1 {
      exec{'Remove br-int on ovs':
         command => "su -s /bin/sh -c 'ovs-vsctl del-br br-int'",
         onlyif => "su -s /bin/sh -c 'ovs-vsctl br-exists br-int'"
-}
-
-if size($controllers_ip) > 1 {
+}->
      exec{'Set ONOS as the manager':
-        command => "su -s /bin/sh -c 'ovs-vsctl set-manager tcp:$controllers_ip[0]:6640 tcp:$controllers_ip[1]:6640 tcp:$controllers_ip[2]:6640'",
+        command => "su -s /bin/sh -c 'ovs-vsctl set-manager $onos_ovsdb_iface'",
          }
-} else {
-     exec{'Set ONOS as the manager':
-        command => "su -s /bin/sh -c 'ovs-vsctl set-manager tcp:$controllers_ip:6640'",
-         }
-}
 
 }
