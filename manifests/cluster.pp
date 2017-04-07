@@ -1,6 +1,6 @@
 class onos::cluster ($controllers_ip) {
 
-$onos_cluster_file_path = $onos::onos_cluster_file_path
+$onos_cluster_file_path = '/opt/onos/config/cluster.json'
 
 ## create onos cluster
   $ip1 = $controllers_ip[0]

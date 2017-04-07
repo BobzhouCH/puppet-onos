@@ -41,8 +41,8 @@ exec{ 'install onos-ovsdb-provider-host feature':
 exec{ 'install onos-drivers-ovsdb feature':
         command => "/opt/onos/bin/onos 'feature:install onos-drivers-ovsdb'"
 }->
-exec{ 'sleep 30 to stablize onos features':
-        command => 'sudo sleep 30;'
+exec{ 'sleep 10 to stablize onos features':
+        command => 'sudo sleep 10;'
 }->
 exec{ 'install vtn feature':
         command => "/opt/onos/bin/onos 'feature:install onos-apps-vtn'"
