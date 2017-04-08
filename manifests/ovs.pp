@@ -2,9 +2,6 @@ class onos::ovs ($controllers_ip){
 
 $onos_ovsdb_iface = join(regsubst($controllers_ip, '.+', 'tcp:\0:6640'), ' ')
 
-class {'::onos::cluster':
-      controllers_ip => $controllers_ip}
-
 $neutron_ovs_agent = $::operatingsystem ? {
   'CentOS' => 'neutron-openvswitch-agent',
   'Ubuntu' => 'neutron-plugin-openvswitch-agent',
