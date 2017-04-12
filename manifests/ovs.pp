@@ -2,6 +2,8 @@ class onos::ovs ($controllers_ip){
 
 $onos_ovsdb_iface = join(regsubst($controllers_ip, '.+', 'tcp:\0:6640'), ' ')
 
+$manager_ip = $controllers_ip[0]
+
 $neutron_ovs_agent = $::operatingsystem ? {
   'CentOS' => 'neutron-openvswitch-agent',
   'Ubuntu' => 'neutron-plugin-openvswitch-agent',
@@ -63,7 +65,7 @@ firewall{'216 vxlan':
      #}-> 
 	 
 	 exec{'Set ONOS as the manager':
-        command => "su -s /bin/sh -c 'ovs-vsctl set-manager tcp:$controllers_ip[0]:6640'",
+        command => "su -s /bin/sh -c 'ovs-vsctl set-manager tcp:$manager_ip:6640'",
 }-> 
      exec{ 'sleep 30 for ovs config stable':
         command => 'sudo sleep 30;'
