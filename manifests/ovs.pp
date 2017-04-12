@@ -57,22 +57,16 @@ firewall{'216 vxlan':
      exec{ 'sleep 20 to stablize onos in ovs.pp':
         command => 'sudo sleep 20;'
 }->
-     exec{'Set ONOS as the manager':
-        command => "su -s /bin/sh -c 'ovs-vsctl set-manager $onos_ovsdb_iface'",
+     # disable set multi manager for ovs
+	 #exec{'Set ONOS as the manager':
+     #   command => "su -s /bin/sh -c 'ovs-vsctl set-manager $onos_ovsdb_iface'",
+     #}-> 
+	 
+	 exec{'Set ONOS as the manager':
+        command => "su -s /bin/sh -c 'ovs-vsctl set-manager tcp:$controllers_ip[0]:6640'",
 }-> 
      exec{ 'sleep 30 for ovs config stable':
         command => 'sudo sleep 30;'
 }
-#}->
-#     exec{'Remove manager on ovs':
-#        command => "su -s /bin/sh -c 'ovs-vsctl del-manager'",
-#}->
-#     exec{'Remove br-int on ovs':
-#        command => "su -s /bin/sh -c 'ovs-vsctl del-br br-int'",
-#        onlyif => "su -s /bin/sh -c 'ovs-vsctl br-exists br-int'"
-#}->
-#     exec{'Set ONOS as the manager':
-#        command => "su -s /bin/sh -c 'ovs-vsctl set-manager $onos_ovsdb_iface'",
-#         }
 
 }
